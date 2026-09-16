@@ -1,4 +1,8 @@
-//import area
+import React from "react";
+import {Link} from "react-router-dom"
+import {BellElectric, LayoutDashboard, CircleDot, MoveRight} from "lucide-react";
+
+import "./Professor.css";
 
 export default function ProfessorDashboard(){
     
@@ -9,21 +13,37 @@ export default function ProfessorDashboard(){
             {/*Esse side nav ele vai virar um componente futuramente*/}
             <nav className="Side-Nav">
                 <div className="Side-Nav_Logo">
-                    <Icon></Icon>
-                    <h1>Notas</h1>
+                    <BellElectric />
+                    <h1>GradeUp</h1>
                 </div>
 
-                <div className="Side-Nav_Itens">
-                    <p>Professor</p>
-                    <div className="Side-Nav_Iten">
-                        <Icon></Icon>
-                        <span>Dashboard</span>
-                    </div>
+                <div className="Side-Nav_Menu">
+
+                     <span className="Side-Nav_Title">
+                        PROFESSOR
+                    </span>
+
+                    <Link className="Side-Nav_Itens" to="#">
+                        <p>Professor</p>
+                        <div className="Side-Nav_Iten">
+                            <LayoutDashboard/>
+                            <span>Dashboard</span>
+                        </div>
+                    </Link>
+
+                    <Link className="Side-Nav_Itens" to="#">
+                        <p>Professor</p>
+                        <div className="Side-Nav_Iten">
+                            <CircleDot/>
+                            <span>Alunos</span>
+                        </div>
+                    </Link>
+
                 </div>
 
                 <div className="Side-Nav_Bottom">
-                    <Link>
-                        <Icon></Icon>
+                    <Link to="#">
+                        <MoveRight />
                         <span>Sair</span>
                     </Link>
                 </div>
@@ -50,10 +70,12 @@ export default function ProfessorDashboard(){
 
                 <div className="Dashboard_Registers">
                     <div className="Registers_Title">
-                        <h3>Últimas notícias</h3>
-                        <Link>
+                        <h3>Últimas notas cadastradas</h3>
+
+                        <Link to="#">
                             <span>Ver Todos</span>
                         </Link>
+
                     </div>
 
                     <div className="Registers_Fields">
