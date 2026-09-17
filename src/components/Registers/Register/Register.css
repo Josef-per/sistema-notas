@@ -1,0 +1,336 @@
+/* ========================================
+   ALUNOS LIST
+======================================== */
+
+.Dashboard_Registers {
+    width: 100%;
+    overflow: hidden;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* ========================================
+   FILTROS
+======================================== */
+
+.Registers_Filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+
+    padding: var(--spacing-md);
+}
+
+
+/* ========================================
+   BUSCA
+======================================== */
+
+.Registers_Search {
+    flex: 1;
+    min-width: 0;
+    height: 38px;
+
+    padding: 0 var(--spacing-md);
+
+    background-color: var(--color-input);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    outline: none;
+
+    font-size: 0.875rem;
+    font-weight: 400;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.Registers_Search::placeholder {
+    color: var(--color-muted);
+}
+
+.Registers_Search:focus {
+    border-color: var(--color-primary);
+
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.12);
+}
+
+
+/* ========================================
+   FILTROS / TABS
+======================================== */
+
+.Registers_Tabs {
+    display: flex;
+    align-items: center;
+
+    padding: 3px;
+
+    background-color: var(--color-input);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.Registers_Tab {
+    height: 30px;
+
+    padding: 0 var(--spacing-md);
+
+    background: transparent;
+    color: var(--color-muted);
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.Registers_Tab:hover {
+    color: var(--color-text);
+}
+
+.Registers_Tab.active {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+}
+
+
+/* ========================================
+   CABEÇALHO DA TABELA
+======================================== */
+
+.Registers_Fields {
+    display: grid;
+
+    grid-template-columns:
+        2.2fr
+        1.8fr
+        2fr
+        2fr
+        1fr;
+
+    align-items: center;
+
+    min-height: 40px;
+
+    padding: 0 var(--spacing-md);
+
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.Registers_Fields span {
+    color: var(--color-muted);
+
+    font-size: 0.625rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* ========================================
+   LINHAS
+======================================== */
+
+.Registers_Field {
+    display: grid;
+
+    grid-template-columns:
+        2.2fr
+        1.8fr
+        2fr
+        2fr
+        1fr;
+
+    align-items: center;
+
+    min-height: 52px;
+
+    padding: 0 var(--spacing-md);
+
+    border-bottom: 1px solid rgba(46, 36, 80, 0.65);
+
+    font-size: 0.875rem;
+
+    transition: background-color 0.2s ease;
+}
+
+.Registers_Field:last-child {
+    border-bottom: none;
+}
+
+.Registers_Field:hover {
+    background-color: rgba(124, 58, 237, 0.04);
+}
+
+
+/* ========================================
+   NOME
+======================================== */
+
+.Register_Name {
+    color: var(--color-text);
+
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   NOTA
+======================================== */
+
+.Register_Grade {
+    color: var(--color-text);
+
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+
+/* ========================================
+   DATA
+======================================== */
+
+.Register_Date {
+    color: var(--color-muted);
+
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.Register_Status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    padding: 3px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+
+/* APROVADO */
+
+.Register_Status.approved {
+    background-color: rgba(34, 197, 94, 0.10);
+    color: var(--color-success);
+
+    border: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+
+/* REPROVADO */
+
+.Register_Status.failed {
+    background-color: rgba(239, 68, 68, 0.10);
+    color: var(--color-error);
+
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+
+/* ========================================
+   AÇÕES
+======================================== */
+
+.Register_Action a {
+    color: var(--color-primary-hover);
+
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.Register_Action a:hover {
+    color: var(--color-text);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 800px) {
+
+    .Registers_Filters {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .Registers_Search {
+        width: 100%;
+    }
+
+    .Registers_Tabs {
+        width: fit-content;
+    }
+
+    .Registers_Fields,
+    .Registers_Field {
+        grid-template-columns:
+            2fr
+            1fr
+            1.5fr
+            1.5fr
+            0.8fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .Registers_Fields {
+        display: none;
+    }
+
+    .Registers_Field {
+        grid-template-columns: 1fr 1fr;
+
+        gap: var(--spacing-sm);
+
+        padding: var(--spacing-md);
+    }
+
+    .Register_Name {
+        grid-column: 1 / -1;
+    }
+
+    .Register_Action {
+        text-align: right;
+    }
+}

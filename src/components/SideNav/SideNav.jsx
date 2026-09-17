@@ -30,7 +30,7 @@ export default function SideNav() {
                     <span>Dashboard</span>
                 </Link>
 
-                <Link className="Side-Nav_Item" to="/AlunosList">
+                <Link className="Side-Nav_Item" to="/Professor/Alunos">
                     <CircleDot />
                     <span>Alunos</span>
                 </Link>
