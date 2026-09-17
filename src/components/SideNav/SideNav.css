@@ -59,20 +59,23 @@
 ================================ */
 
 .Side-Nav_Item {
+    width: 100%;
+
     display: flex;
     align-items: center;
     gap: 0.75rem;
 
-    width: 100%;
-    min-height: 2.625rem;
-
-    padding: 0 var(--spacing-sm);
+    padding: 0.65rem 0.75rem;
 
     color: var(--color-muted);
-    text-decoration: none;
 
     border: 1px solid transparent;
     border-radius: var(--radius-md);
+
+    text-decoration: none;
+
+    font-size: 0.875rem;
+    font-weight: 500;
 
     transition:
         background-color 0.2s ease,
@@ -80,30 +83,42 @@
         border-color 0.2s ease;
 }
 
+
+/* Ícone */
+
 .Side-Nav_Item svg {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 1rem;
+    height: 1rem;
 
     flex-shrink: 0;
 }
 
-.Side-Nav_Item span {
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1;
-}
+
+/* Hover */
 
 .Side-Nav_Item:hover {
     color: var(--color-text);
+
     background-color: var(--color-input);
 }
+
+
+/* Página atual */
 
 .Side-Nav_Item.active {
-    color: var(--color-primary-hover);
-    background-color: var(--color-input);
-    border-color: var(--color-border);
+    color: var(--color-text);
+
+    background-color: rgba(124, 58, 237, 0.12);
+
+    border-color: rgba(124, 58, 237, 0.25);
 }
 
+
+/* Ícone da página atual */
+
+.Side-Nav_Item.active svg {
+    color: var(--color-primary-hover);
+}
 
 /* ================================
    PARTE INFERIOR
@@ -117,7 +132,10 @@
     border-top: 1px solid var(--color-border);
 }
 
-.Side-Nav_Bottom button {
+
+/* Botão de sair */
+
+.Side-Nav_Bottom a {
     width: 100%;
 
     display: flex;
@@ -129,25 +147,48 @@
     color: var(--color-muted);
     background: transparent;
 
-    border: none;
+    border: 1px solid transparent;
     border-radius: var(--radius-md);
 
     font-size: 0.875rem;
     font-weight: 500;
 
+    text-decoration: none;
+
     cursor: pointer;
 
     transition:
         background-color 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.Side-Nav_Bottom button:hover {
+
+/* Hover */
+
+.Side-Nav_Bottom a:hover {
     color: var(--color-text);
+
     background-color: var(--color-input);
+
+    border-color: var(--color-border);
 }
+
+
+/* Ícone */
 
 .Side-Nav_Bottom svg {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 1rem;
+    height: 1rem;
+
+    flex-shrink: 0;
+
+    transition: color 0.2s ease;
+}
+
+
+/* Ícone no hover */
+
+.Side-Nav_Bottom a:hover svg {
+    color: var(--color-primary-hover);
 }

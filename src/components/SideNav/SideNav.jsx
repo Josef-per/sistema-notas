@@ -1,9 +1,9 @@
 import {
     BellElectric,
-    MoveRight
+    LogOut
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./SideNav.css";
 
 export default function SideNav({ title, items }) {
@@ -25,14 +25,17 @@ export default function SideNav({ title, items }) {
                     const Icon = item.icon;
 
                     return (
-                        <Link
+                        <NavLink
                             key={item.label}
-                            className="Side-Nav_Item"
+                            className={({ isActive }) =>
+                                `Side-Nav_Item ${isActive ? "active" : ""}`
+                            }
                             to={item.to}
+                            end={item.end}
                         >
                             <Icon />
                             <span>{item.label}</span>
-                        </Link>
+                        </NavLink>
                     );
                 })}
 
@@ -40,7 +43,7 @@ export default function SideNav({ title, items }) {
 
             <div className="Side-Nav_Bottom">
                 <Link to="/">
-                    <MoveRight />
+                    <LogOut />
                     <span>Sair</span>
                 </Link>
             </div>
