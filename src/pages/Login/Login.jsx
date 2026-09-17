@@ -1,11 +1,14 @@
 import React, { useState } from "react"
 import {BellElectric, Mail, Lock, Eye, EyeOff} from "lucide-react"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 import "./Login.css"
 import FormFiled from "../../components/FormField/FormField"
 
 export default function Login(){
+
+    //navegação entre as páginas
+    const navigate = useNavigate();
 
     //estados padrão da tela
     const [mail, setMail] = useState("");
@@ -18,7 +21,35 @@ export default function Login(){
     //estados da página
     const [showPassword, setShowPassword] = useState(false);
 
-    //aqui ta o nosso front-end
+    //validação dos campos
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        let hasError = false;
+
+        setMailError("");
+        setPasswordError("");
+
+        if (!mail.trim()) {
+            setMailError("Informe seu e-mail.");
+            hasError = true;
+        }
+
+        if (!password.trim()) {
+            setPasswordError("Informe sua senha.");
+            hasError = true;
+        }
+
+        if (hasError) {
+            return;
+        }
+
+        // Temporário:
+        // Depois vikito vc altera pra validação do backend
+
+        navigate("/Professor");
+    };
+
     return(
         <>
             <main className="Login">
@@ -31,7 +62,7 @@ export default function Login(){
                     </div>
 
                     <div className="Login_Card">
-                        <form className="Login_Form">
+                        <form className="Login_Form" onSubmit={handleSubmit}>
                             {/*Aqui vamos colocar os comnentes dos campos de cadastro*/}
                             <FormFiled
                                 label="E-mail"
@@ -75,12 +106,12 @@ export default function Login(){
                             </Link>
 
                             {/*Link temporário somente para testes*/}
-                            <Link 
-                                to="/Professor"
+                            <button
+                                type="submit"
                                 className="Login_BtnEntrar"
                             >
                                 Entrar
-                            </Link>
+                            </button>
                         </form>
                     </div>
                 </section>
