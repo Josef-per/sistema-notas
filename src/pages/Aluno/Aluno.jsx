@@ -5,6 +5,7 @@ import SideNav from "../../components/SideNav/SideNav"
 import "./Aluno.css"
 import AlunoMedia from "../../components/Aluno/AlunoMedia/AlunoMedia"
 import AlunoInfos from "../../components/Aluno/AlunoInfos/AlunoInfos"
+import { alunoMenu } from "../../config/navigation"
 
 export default function AlunoDashboard(){
 
@@ -12,7 +13,10 @@ export default function AlunoDashboard(){
     //quando vc terminar vc tira manito
     return(
         <>
-            <SideNav />
+            <SideNav 
+                title={"Aluno"}
+                items={alunoMenu}
+            />
             <main className="Aluno_Dashboard">
 
                 <AlunoMedia 

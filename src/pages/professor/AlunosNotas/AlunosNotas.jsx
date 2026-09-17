@@ -5,6 +5,7 @@ import FormField from "../../../components/FormField/FormField";
 import SideNav from "../../../components/SideNav/SideNav";
 
 import "./AlunosNotas.css";
+import { professorMenu } from "../../../config/navigation";
 
 export default function AlunosNotas() {
 
@@ -41,7 +42,10 @@ export default function AlunosNotas() {
 
     return (
         <>
-            <SideNav />
+            <SideNav 
+                title={"Professor"}
+                items={professorMenu}
+            />
 
             <main className="Aluno_Notas">
 

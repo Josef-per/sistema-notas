@@ -1,16 +1,12 @@
-//import dos icons
 import {
-    LayoutDashboard,
-    CircleDot,
     BellElectric,
-    MoveRight,
-    Plus
+    MoveRight
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
-import "./SideNav.css"
+import "./SideNav.css";
 
-export default function SideNav() {
+export default function SideNav({ title, items }) {
     return (
         <nav className="Side-Nav">
 
@@ -22,23 +18,23 @@ export default function SideNav() {
             <div className="Side-Nav_Menu">
 
                 <span className="Side-Nav_Title">
-                    PROFESSOR
+                    {title}
                 </span>
 
-                <Link className="Side-Nav_Item" to="/Professor">
-                    <LayoutDashboard />
-                    <span>Dashboard</span>
-                </Link>
+                {items.map((item) => {
+                    const Icon = item.icon;
 
-                <Link className="Side-Nav_Item" to="/Professor/Alunos">
-                    <CircleDot />
-                    <span>Alunos</span>
-                </Link>
-
-                <Link className="Side-Nav_Item" to="/Professor/Alunos/Notas">
-                    <Plus />
-                    <span>Cadastrar nota</span>
-                </Link>
+                    return (
+                        <Link
+                            key={item.label}
+                            className="Side-Nav_Item"
+                            to={item.to}
+                        >
+                            <Icon />
+                            <span>{item.label}</span>
+                        </Link>
+                    );
+                })}
 
             </div>
 

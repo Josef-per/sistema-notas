@@ -1,6 +1,4 @@
-import React from "react";
-import {Link} from "react-router-dom"
-import {BellElectric, LayoutDashboard, CircleDot, MoveRight} from "lucide-react";
+import {LayoutDashboard, CircleDot, Plus} from "lucide-react";
 
 import "./Professor.css";
 
@@ -8,13 +6,17 @@ import "./Professor.css";
 import SideNav from "../../components/SideNav/SideNav";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import DashboardRegister from "../../components/Registers/DashboardRegister/DashboardRegister";
+import { professorMenu } from "../../config/navigation";
 
 export default function ProfessorDashboard(){
         
     return(
         <>
             {/*Esse side nav ele vai virar um componente futuramente*/}
-            <SideNav />
+            <SideNav 
+                title={"Professor"}
+                items={professorMenu}
+            />
             <main className="Dashboard">
 
                 <div className="Dashboard_Cards">
