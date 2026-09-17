@@ -52,8 +52,7 @@
 .Registers_Fields {
     display: grid;
 
-    /* Nome maior, nota e situação menores */
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 40% 30% 30%;
 
     padding: var(--spacing-sm) var(--spacing-lg);
 
@@ -77,8 +76,7 @@
 
 .Registers_Field {
     display: grid;
-
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 40% 30% 30%;
 
     align-items: center;
 
@@ -109,5 +107,4 @@
         padding-left: var(--spacing-md);
         padding-right: var(--spacing-md);
     }
-
 }

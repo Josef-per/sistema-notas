@@ -1,0 +1,352 @@
+/* =================================
+   NOTAS DO ALUNO
+================================= */
+
+.Aluno_Notas {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: var(--spacing-xl);
+
+    margin-left: 250px;
+}
+
+
+/* =================================
+   CARD DO FORMULÁRIO
+================================= */
+
+.Aluno_GradeForm {
+    width: 100%;
+    max-width: 760px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-card);
+
+    padding: var(--spacing-xl);
+}
+
+
+/* =================================
+   CABEÇALHO
+================================= */
+
+.GradeForm_Header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.GradeForm_Header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    color: var(--color-text);
+
+    margin-bottom: var(--spacing-xs);
+}
+
+.GradeForm_Header p {
+    font-size: 0.875rem;
+    font-weight: 400;
+
+    color: var(--color-muted);
+}
+
+
+/* =================================
+   FORMULÁRIO
+================================= */
+
+.GradeForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-lg);
+}
+
+
+/* =================================
+   SELECT DO ALUNO
+================================= */
+
+.GradeForm_Select {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-sm);
+}
+
+.GradeForm_Select label {
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    color: var(--color-text);
+}
+
+.GradeForm_Select select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 var(--spacing-md);
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    color: var(--color-text);
+    background-color: var(--color-input);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* Seta do select */
+
+.GradeForm_Select {
+    position: relative;
+}
+
+.GradeForm_Select::after {
+    content: "⌄";
+
+    position: absolute;
+
+    right: 14px;
+    bottom: 10px;
+
+    color: var(--color-muted);
+
+    font-size: 1rem;
+
+    pointer-events: none;
+}
+
+.GradeForm_Select select:hover {
+    border-color: #45356f;
+}
+
+.GradeForm_Select select:focus {
+    border-color: var(--color-primary);
+
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+
+/* =================================
+   NOTAS
+================================= */
+
+.GradeForm_Grades {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: var(--spacing-lg);
+}
+
+
+/* =================================
+   CAMPOS DO FORMFIELD
+================================= */
+
+/*
+   Esses estilos complementam o seu
+   componente FormField.
+*/
+
+.GradeForm_Grades label {
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    color: var(--color-text);
+}
+
+
+/* Caso o FormField utilize input diretamente */
+
+.GradeForm_Grades input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 var(--spacing-md);
+
+    color: var(--color-text);
+    background-color: var(--color-input);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.GradeForm_Grades input::placeholder {
+    color: #6f6289;
+}
+
+.GradeForm_Grades input:hover {
+    border-color: #45356f;
+}
+
+.GradeForm_Grades input:focus {
+    border-color: var(--color-primary);
+
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+
+/* Remove as setinhas do input number */
+
+.GradeForm_Grades input[type="number"]::-webkit-inner-spin-button,
+.GradeForm_Grades input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.GradeForm_Grades input[type="number"] {
+    appearance: textfield;
+}
+
+
+/* =================================
+   BOTÕES
+================================= */
+
+.Form_Buttons {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--spacing-md);
+
+    margin-top: var(--spacing-sm);
+}
+
+.Form_Button {
+    height: 42px;
+
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Cancelar */
+
+.Form_Button-Cancel {
+    color: var(--color-text);
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+}
+
+.Form_Button-Cancel:hover {
+    background-color: var(--color-input);
+
+    border-color: #45356f;
+}
+
+.Form_Button-Cancel:active {
+    transform: scale(0.98);
+}
+
+
+/* Salvar */
+
+.Form_Button-Save {
+    color: white;
+
+    background-color: var(--color-primary);
+
+    border: 1px solid var(--color-primary);
+
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.Form_Button-Save:hover {
+    background-color: var(--color-primary-hover);
+
+    border-color: var(--color-primary-hover);
+
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+}
+
+.Form_Button-Save:active {
+    transform: scale(0.98);
+}
+
+
+/* =================================
+   RESPONSIVIDADE
+================================= */
+
+@media (max-width: 800px) {
+
+    .Aluno_Notas {
+        margin-left: 0;
+
+        padding: var(--spacing-lg);
+    }
+
+    .Aluno_GradeForm {
+        max-width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .Aluno_Notas {
+        padding: var(--spacing-md);
+    }
+
+    .Aluno_GradeForm {
+        padding: var(--spacing-lg);
+    }
+
+    .GradeForm_Grades {
+        grid-template-columns: 1fr;
+
+        gap: var(--spacing-md);
+    }
+
+    .Form_Buttons {
+        grid-template-columns: 1fr;
+    }
+
+}

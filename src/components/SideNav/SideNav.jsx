@@ -35,7 +35,7 @@ export default function SideNav() {
                     <span>Alunos</span>
                 </Link>
 
-                <Link className="Side-Nav_Item" to="/CadastrarNota">
+                <Link className="Side-Nav_Item" to="/Professor/Alunos/Notas">
                     <Plus />
                     <span>Cadastrar nota</span>
                 </Link>
