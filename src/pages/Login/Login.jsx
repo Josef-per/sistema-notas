@@ -74,9 +74,13 @@ export default function Login(){
                                 <span>Esqueci minha senha</span>
                             </Link>
 
-                            <button className="Login_BtnEntrar">
+                            {/*Link temporário somente para testes*/}
+                            <Link 
+                                to="/Professor"
+                                className="Login_BtnEntrar"
+                            >
                                 Entrar
-                            </button>
+                            </Link>
                         </form>
                     </div>
                 </section>

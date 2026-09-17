@@ -2,14 +2,16 @@
 import {Routes, Route} from "react-router-dom"
 
 import Login from "./pages/Login/Login"
-import ProfessorDashboard from "./pages/Professor/Professor"
+import ProfessorDashboard from "./pages/professor/Professor"
+
 
 function App() {
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<ProfessorDashboard/>}/>
+        <Route path="/" element={<Login/>} />
+        <Route path="/Professor" element={<ProfessorDashboard/>} />
       </Routes>
     </>
   )
