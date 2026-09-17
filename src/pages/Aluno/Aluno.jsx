@@ -1,47 +1,31 @@
 import React from "react"
 
 import SideNav from "../../components/SideNav/SideNav"
-import {Dot} from "lucide-react"
 
 import "./Aluno.css"
+import AlunoMedia from "../../components/Aluno/AlunoMedia/AlunoMedia"
+import AlunoInfos from "../../components/Aluno/AlunoInfos/AlunoInfos"
 
 export default function AlunoDashboard(){
+
+    //manito quando vc terminar vc pode tirar as props eu coloquei elas só pra tipo aparecerem mas 
+    //quando vc terminar vc tira manito
     return(
         <>
             <SideNav />
             <main className="Aluno_Dashboard">
 
-                <div className="Aluno_Media">
-                    <p>NOTA FINAL</p>
-                    <h1>8,5</h1>
-                    <div className="Aluno_Status">
-                        <Dot/>
-                        <span>Aprovado</span>
-                    </div>
-                </div>
+                <AlunoMedia 
+                    nota={67}
+                    status={"Aprovado"}
+                />
 
-                <div className="Aluno_Infos">
-
-                    <div className="Aluno_Info">
-                        <span>Aluno</span>
-                        <span>João da Silva</span>
-                    </div>
-
-                    <div className="Aluno_Info">
-                        <span>Nota Final</span>
-                        <span>8,5</span>
-                    </div>
-
-                    <div className="Aluno_Info">
-                        <span>Situação</span>
-                        <span>Aprovado</span>
-                    </div>
-
-                    <div className="Aluno_Info">
-                        <span>Última Atualização</span>
-                        <span>10/09/2026</span>
-                    </div>
-                </div>
+                <AlunoInfos 
+                    aluno={"Vikitor gugugaga"}
+                    media={67}
+                    status={"Aprovado"}
+                    data={"17/08/2067"}
+                />
 
             </main>
         </>
