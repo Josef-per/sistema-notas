@@ -1,0 +1,225 @@
+/* =================================
+   ALUNO - DASHBOARD
+================================= */
+
+.Aluno_Dashboard {
+    min-height: 100vh;
+
+    margin-left: 220px;
+    padding: 2rem 1.5rem;
+
+    background-color: var(--color-bg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    color: var(--color-text);
+}
+
+
+/* =================================
+   NOTA FINAL
+================================= */
+
+.Aluno_Media {
+    width: 512px;
+    min-height: 246px;
+
+    padding: var(--spacing-lg);
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* Título pequeno */
+
+.Aluno_Media p {
+    margin-bottom: var(--spacing-sm);
+
+    color: var(--color-muted);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* Nota */
+
+.Aluno_Media h1 {
+    margin: 0;
+
+    color: var(--color-success);
+
+    font-size: 6rem;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+}
+
+
+/* =================================
+   STATUS
+================================= */
+
+.Aluno_Status {
+    margin-top: var(--spacing-md);
+    padding: 0.45rem 0.8rem;
+
+    background-color: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    border-radius: 999px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+
+    color: var(--color-success);
+
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+
+/* Ícone Dot do Lucide */
+
+.Aluno_Status svg {
+    width: 16px;
+    height: 16px;
+
+    fill: currentColor;
+    stroke-width: 2.5;
+}
+
+
+/* =================================
+   INFORMAÇÕES
+================================= */
+
+.Aluno_Infos {
+    width: 512px;
+
+    margin-top: var(--spacing-md);
+
+    overflow: hidden;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* =================================
+   CADA INFORMAÇÃO
+================================= */
+
+.Aluno_Info {
+    min-height: 49px;
+
+    padding: 0 var(--spacing-md);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(46, 36, 80, 0.65);
+}
+
+
+/* Remove a borda do último item */
+
+.Aluno_Info:last-child {
+    border-bottom: none;
+}
+
+
+/* Labels */
+
+.Aluno_Info span:first-child {
+    color: var(--color-muted);
+
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+
+/* Valores */
+
+.Aluno_Info span:last-child {
+    color: var(--color-text);
+
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* Situação */
+
+.Aluno_Info:nth-child(3) span:last-child {
+    color: var(--color-success);
+}
+
+
+/* =================================
+   RESPONSIVIDADE
+================================= */
+
+@media (max-width: 768px) {
+
+    .Aluno_Dashboard {
+        margin-left: 0;
+        padding: var(--spacing-lg) var(--spacing-md);
+
+        align-items: stretch;
+    }
+
+    .Aluno_Media,
+    .Aluno_Infos {
+        width: 100%;
+    }
+
+    .Aluno_Media {
+        min-height: 220px;
+    }
+
+    .Aluno_Media h1 {
+        font-size: 5rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .Aluno_Dashboard {
+        padding: var(--spacing-md);
+    }
+
+    .Aluno_Media {
+        min-height: 200px;
+    }
+
+    .Aluno_Media h1 {
+        font-size: 4.5rem;
+    }
+
+    .Aluno_Info {
+        padding: 0 var(--spacing-sm);
+    }
+}
