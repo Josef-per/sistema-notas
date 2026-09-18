@@ -47,7 +47,7 @@ export default function Login(){
         // Temporário:
         // Depois vikito vc altera pra validação do backend
 
-        navigate("/Professor");
+        navigate("/professor");
     };
 
     return(

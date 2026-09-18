@@ -8,19 +8,19 @@ import {
 export const professorMenu = [
     {
         label: "Dashboard",
-        to: "/Professor",
+        to: "/professor",
         icon: LayoutDashboard,
         end: true
     },
     {
         label: "Alunos",
-        to: "/Professor/Alunos",
+        to: "/professor/alunos",
         icon: CircleDot,
         end: true
     },
     {
         label: "Cadastrar nota",
-        to: "/Professor/Alunos/Notas",
+        to: "/professor/alunos/notas",
         icon: Plus,
         end: true
     }
@@ -30,7 +30,7 @@ export const professorMenu = [
 export const alunoMenu = [
     {
         label: "Dashboard",
-        to: "/Aluno",
+        to: "/aluno",
         icon: LayoutDashboard,
         end: true
     }
