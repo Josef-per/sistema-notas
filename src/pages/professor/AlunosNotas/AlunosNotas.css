@@ -316,15 +316,17 @@
 ================================= */
 
 @media (max-width: 800px) {
-
     .Aluno_Notas {
-        margin-left: 0;
-
         padding: var(--spacing-lg);
     }
 
     .Aluno_GradeForm {
         max-width: 100%;
+    }
+
+    .GradeForm_Grades,
+    .Form_Buttons {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -378,4 +380,15 @@
 .GradeForm input:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.Aluno_Notas,
+.Aluno_Notas * {
+    box-sizing: border-box;
+}
+
+.Aluno_Notas .Aluno_GradeForm,
+.Aluno_Notas .form-group,
+.Aluno_Notas .input-container {
+    min-width: 0;
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BellElectric, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./Login.css";
 import FormFiled from "../../components/FormField/FormField";
@@ -80,8 +80,8 @@ export default function Login() {
 
       setLoginError(
         mensagens[erro.code] ||
-          (!erro.code && erro.message) ||
-          "Não foi possível entrar. Tente novamente.",
+        (!erro.code && erro.message) ||
+        "Não foi possível entrar. Tente novamente.",
       );
 
       console.error("Falha no login:", erro.code || erro.message);
@@ -135,9 +135,9 @@ export default function Login() {
               }
             />
 
-            <Link to="#" className="Forgot_Password">
-              <span>Esqueci minha senha</span>
-            </Link>
+            <p className="Login_Help">
+              Para recuperar o acesso, contate o responsável pelo sistema.
+            </p>
 
             {loginError && (
               <p role="alert" className="Login_Error">
