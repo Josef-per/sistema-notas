@@ -1,0 +1,194 @@
+/* ================================
+   LOGO
+================================ */
+
+.Side-Nav_Logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    margin-bottom: 2rem;
+}
+
+.Side-Nav_Logo svg {
+    width: 1.75rem;
+    height: 1.75rem;
+
+    padding: 0.35rem;
+
+    color: var(--color-text);
+    background-color: var(--color-primary);
+
+    border-radius: var(--radius-md);
+}
+
+.Side-Nav_Logo h1 {
+    color: var(--color-text);
+
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+
+/* ================================
+   MENU
+================================ */
+
+.Side-Nav_Menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.Side-Nav_Title {
+    margin-bottom: var(--spacing-xs);
+    padding-left: 0;
+
+    color: var(--color-muted);
+
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+}
+
+
+/* ================================
+   ITENS DO MENU
+================================ */
+
+.Side-Nav_Item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    padding: 0.65rem 0.75rem;
+
+    color: var(--color-muted);
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    text-decoration: none;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Ícone */
+
+.Side-Nav_Item svg {
+    width: 1rem;
+    height: 1rem;
+
+    flex-shrink: 0;
+}
+
+
+/* Hover */
+
+.Side-Nav_Item:hover {
+    color: var(--color-text);
+
+    background-color: var(--color-input);
+}
+
+
+/* Página atual */
+
+.Side-Nav_Item.active {
+    color: var(--color-text);
+
+    background-color: rgba(124, 58, 237, 0.12);
+
+    border-color: rgba(124, 58, 237, 0.25);
+}
+
+
+/* Ícone da página atual */
+
+.Side-Nav_Item.active svg {
+    color: var(--color-primary-hover);
+}
+
+/* ================================
+   PARTE INFERIOR
+================================ */
+
+.Side-Nav_Bottom {
+    margin-top: auto;
+
+    padding-top: var(--spacing-md);
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+/* Botão de sair */
+
+.Side-Nav_Bottom a {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    padding: var(--spacing-sm);
+
+    color: var(--color-muted);
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Hover */
+
+.Side-Nav_Bottom a:hover {
+    color: var(--color-text);
+
+    background-color: var(--color-input);
+
+    border-color: var(--color-border);
+}
+
+
+/* Ícone */
+
+.Side-Nav_Bottom svg {
+    width: 1rem;
+    height: 1rem;
+
+    flex-shrink: 0;
+
+    transition: color 0.2s ease;
+}
+
+
+/* Ícone no hover */
+
+.Side-Nav_Bottom a:hover svg {
+    color: var(--color-primary-hover);
+}

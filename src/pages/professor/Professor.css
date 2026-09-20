@@ -1,0 +1,35 @@
+/* ================================
+   LAYOUT PRINCIPAL
+================================ */
+
+.Side-Nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 14rem;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--spacing-lg) var(--spacing-md);
+
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+}
+
+/* ================================
+   CONTEÚDO PRINCIPAL
+================================ */
+
+.Dashboard {
+    min-height: 100vh;
+
+    margin-left: 14rem;
+
+    padding: var(--spacing-xl);
+
+    background-color: var(--color-bg);
+}
+

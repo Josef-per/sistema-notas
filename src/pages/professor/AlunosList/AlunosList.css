@@ -1,0 +1,42 @@
+/* ========================================
+   ALUNOS TABLE
+======================================== */
+
+.Alunos_Table {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: var(--spacing-xl);
+
+    /* espaço reservado para o SideNav */
+    margin-left: 240px;
+}
+
+
+/* Limita a largura da tabela em telas grandes */
+.Alunos_Table > * {
+    width: 100%;
+    max-width: 1250px;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 900px) {
+    .Alunos_Table {
+        margin-left: 0;
+        padding: var(--spacing-lg);
+    }
+}
+
+
+@media (max-width: 600px) {
+    .Alunos_Table {
+        padding: var(--spacing-md);
+    }
+}

@@ -1,0 +1,52 @@
+/* =================================
+   NOTA FINAL
+================================= */
+
+.Aluno_Media {
+    width: 512px;
+    min-height: 246px;
+
+    padding: var(--spacing-lg);
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* Título pequeno */
+
+.Aluno_Media p {
+    margin-bottom: var(--spacing-sm);
+
+    color: var(--color-muted);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* Nota */
+
+.Aluno_Media h1 {
+    margin: 0;
+
+    color: var(--color-success);
+
+    font-size: 6rem;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+}
+

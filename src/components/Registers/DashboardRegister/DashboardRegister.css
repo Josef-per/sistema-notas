@@ -1,0 +1,110 @@
+/* ================================
+   REGISTROS
+================================ */
+
+.Dashboard_Registers {
+    overflow: hidden;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+
+/* ================================
+   TÍTULO
+================================ */
+
+.Registers_Title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: var(--spacing-lg);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.Registers_Title h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.Registers_Title a {
+    color: var(--color-primary-hover);
+
+    font-size: 0.85rem;
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.Registers_Title a:hover {
+    color: var(--color-text);
+}
+
+
+/* ================================
+   CABEÇALHO DA TABELA
+================================ */
+
+.Registers_Fields {
+    display: grid;
+
+    grid-template-columns: 40% 30% 30%;
+
+    padding: var(--spacing-sm) var(--spacing-lg);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.Registers_Fields span {
+    color: var(--color-muted);
+
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* ================================
+   LINHAS
+================================ */
+
+.Registers_Field {
+    display: grid;
+    grid-template-columns: 40% 30% 30%;
+
+    align-items: center;
+
+    padding: var(--spacing-md) var(--spacing-lg);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.Registers_Field:last-child {
+    border-bottom: none;
+}
+
+.Registers_Field span {
+    font-size: 0.95rem;
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 600px) {
+
+    .Registers_Fields,
+    .Registers_Field {
+        grid-template-columns: 1.5fr 1fr 1fr;
+
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+}

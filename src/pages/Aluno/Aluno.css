@@ -1,0 +1,77 @@
+/* =================================
+   ALUNO - DASHBOARD
+================================= */
+
+.Aluno_Dashboard {
+    min-height: 100vh;
+
+    margin-left: 220px;
+    padding: 2rem 3rem;
+
+    background-color: var(--color-bg);
+    color: var(--color-text);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+/* Mantém o conteúdo centralizado e evita que
+   fique excessivamente espalhado em telas grandes */
+
+.Aluno_Media,
+.Aluno_Infos {
+    width: 100%;
+    max-width: 900px;
+}
+
+
+/* =================================
+   RESPONSIVIDADE
+================================= */
+
+@media (max-width: 768px) {
+
+    .Aluno_Dashboard {
+        margin-left: 0;
+        padding: var(--spacing-lg) var(--spacing-md);
+
+        align-items: stretch;
+    }
+
+    .Aluno_Media,
+    .Aluno_Infos {
+        width: 100%;
+        max-width: none;
+    }
+
+    .Aluno_Media {
+        min-height: 220px;
+    }
+
+    .Aluno_Media h1 {
+        font-size: 5rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .Aluno_Dashboard {
+        padding: var(--spacing-md);
+    }
+
+    .Aluno_Media {
+        min-height: 200px;
+    }
+
+    .Aluno_Media h1 {
+        font-size: 4.5rem;
+    }
+
+    .Aluno_Info {
+        padding: 0 var(--spacing-sm);
+    }
+}
