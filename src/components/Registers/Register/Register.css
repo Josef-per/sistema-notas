@@ -334,3 +334,60 @@
         text-align: right;
     }
 }
+
+.Register_Status.pending {
+  color: #fbbf24;
+  background-color: rgba(251, 191, 36, 0.1);
+}
+
+.Registers_Tabs {
+  flex-wrap: wrap;
+}
+
+.Registers_Message {
+  padding: 16px;
+  color: var(--text-primary, #fff);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.Alunos_Table .Registers_Filters {
+    flex-wrap: wrap;
+}
+
+.Alunos_Table .Registers_Search {
+    flex: 1 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Alunos_Table .Registers_Tabs {
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.Alunos_Table .Registers_Field > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Com o menu lateral, sobra menos espaço para a tabela */
+@media (max-width: 900px) {
+    .Alunos_Table .Registers_Fields {
+        display: none;
+    }
+
+    .Alunos_Table .Registers_Field {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+
+    .Alunos_Table .Register_Name {
+        grid-column: 1 / -1;
+    }
+
+    .Alunos_Table .Register_Action {
+        text-align: right;
+    }
+}

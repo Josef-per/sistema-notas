@@ -1,39 +1,31 @@
-/* ========================================
-   ALUNOS TABLE
-======================================== */
-
+/* Página ao lado do menu fixo de 14rem */
 .Alunos_Table {
+    box-sizing: border-box;
     min-height: 100vh;
+    min-width: 0;
+
+    margin-left: 14rem;
+    width: calc(100% - 14rem);
 
     display: flex;
     justify-content: center;
     align-items: flex-start;
 
     padding: var(--spacing-xl);
-
-    /* espaço reservado para o SideNav */
-    margin-left: 240px;
 }
 
-
-/* Limita a largura da tabela em telas grandes */
 .Alunos_Table > * {
+    box-sizing: border-box;
     width: 100%;
     max-width: 1250px;
+    min-width: 0;
 }
-
-
-/* ========================================
-   RESPONSIVIDADE
-======================================== */
 
 @media (max-width: 900px) {
     .Alunos_Table {
-        margin-left: 0;
         padding: var(--spacing-lg);
     }
 }
-
 
 @media (max-width: 600px) {
     .Alunos_Table {

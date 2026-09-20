@@ -1,63 +1,59 @@
-import { Link } from "react-router-dom"
-import "./DashboardRegister.css"
+import { Link } from "react-router-dom";
 
-export default function DashboardRegister(){
+import "./DashboardRegister.css";
 
-    //Mano aqui ta uma representação de como a info vai ter que vir pra essa tela
-    const notas = [
-        {
-            id: 1,
-            nome: "João Silva",
-            nota: 8.5,
-            situacao: "Aprovado"
-        },
-        {
-            id: 2,
-            nome: "Maria Santos",
-            nota: 6.0,
-            situacao: "Aprovado"
-        },
-        {
-            id: 3,
-            nome: "Pedro Oliveira",
-            nota: 4.5,
-            situacao: "Reprovado"
-        }
-    ];
+const CORES_STATUS = {
+  Aprovado: "#22c55e",
+  Reprovado: "#f87171",
+  "Em andamento": "#fbbf24",
+};
 
-    return(
-        <>
-            <div className="Dashboard_Registers">
-                    <div className="Registers_Title">
-                        <h3>Últimas notas cadastradas</h3>
+export default function DashboardRegister({ registros = [] }) {
+  return (
+    <div className="Dashboard_Registers">
+      <div className="Registers_Title">
+        <h3>Últimas notas atualizadas</h3>
 
-                        <Link to="#">
-                            <span>Ver Todos</span>
-                        </Link>
+        <Link to="/professor/alunos">
+          <span>Ver Todos</span>
+        </Link>
+      </div>
 
-                    </div>
+      <div className="Registers_Fields">
+        <span>Nome</span>
+        <span>Nota final</span>
+        <span>Situação</span>
+      </div>
 
-                    <div className="Registers_Fields">
-                        <span>Nome</span>
-                        <span>Nota final</span>
-                        <span>Situação</span>
-                    </div>
+      <div className="Registers_Rows">
+        {registros.length === 0 && (
+          <p
+            role="status"
+            style={{ padding: "16px", lineHeight: 1.5 }}
+          >
+            Nenhuma nota cadastrada ainda.
+          </p>
+        )}
 
-                    <div className="Registers_Rows">
+        {registros.map((registro) => (
+          <div className="Registers_Field" key={registro.id}>
+            <span>{registro.nome}</span>
 
-                        {notas.map((nota) => (
-                            <div className="Registers_Field" key={nota.id}>
+            <span>
+              {registro.media === null
+                ? "—"
+                : registro.media.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 2,
+                  })}
+            </span>
 
-                                <span>{nota.nome}</span>
-
-                                <span>{nota.nota.toFixed(1)}</span>
-
-                                <span>{nota.situacao}</span>
-                            </div>
-                        ))}
-
-                    </div>
-                </div>
-        </>
-    )
+            <span style={{ color: CORES_STATUS[registro.status] }}>
+              {registro.status}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

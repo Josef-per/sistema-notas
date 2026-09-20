@@ -1,164 +1,343 @@
-import { useState } from "react";
-import { Tally1, Tally2, Tally3, Tally4 } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
 
 import FormField from "../../../components/FormField/FormField";
 import SideNav from "../../../components/SideNav/SideNav";
 
-import "./AlunosNotas.css";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { professorMenu } from "../../../config/navigation";
 
+import {
+  CAMPOS_NOTAS,
+  listarAlunosDoProfessor,
+  salvarNotas,
+} from "../../../services/alunoService";
+
+import "./AlunosNotas.css";
+
+import { useLocation } from "react-router-dom";
+
+function criarNotasVazias() {
+  return {
+    bimestre1: "",
+    bimestre2: "",
+    bimestre3: "",
+    bimestre4: "",
+  };
+}
+
 export default function AlunosNotas() {
+  const { perfil } = useContext(AuthContext);
+  const location = useLocation();
+  const alunoInicial = location.state?.alunoId || "";
 
-    const [aluno, setAluno] = useState("");
+  const [alunos, setAlunos] = useState([]);
+  const [aluno, setAluno] = useState("");
+  const [notas, setNotas] = useState(criarNotasVazias);
+  const [errosNotas, setErrosNotas] = useState({});
 
-    const [nota1, setNota1] = useState("");
-    const [nota2, setNota2] = useState("");
-    const [nota3, setNota3] = useState("");
-    const [nota4, setNota4] = useState("");
+  const [carregando, setCarregando] = useState(true);
+  const [salvando, setSalvando] = useState(false);
 
-    const [nota1Error, setNota1Error] = useState("");
-    const [nota2Error, setNota2Error] = useState("");
-    const [nota3Error, setNota3Error] = useState("");
-    const [nota4Error, setNota4Error] = useState("");
+  const [erroCarregamento, setErroCarregamento] = useState("");
+  const [erroFormulario, setErroFormulario] = useState("");
+  const [sucesso, setSucesso] = useState("");
 
-    function handleSubmit(event) {
-        event.preventDefault();
+  const professorId = perfil.uid;
 
-        // Validação e salvamento futuramente
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarAlunos() {
+      try {
+        const lista = await listarAlunosDoProfessor(professorId);
+
+        if (ativo) {
+          setAlunos(lista);
+
+          if (alunoInicial) {
+            const selecionado = lista.find(
+              (item) => item.id === alunoInicial
+            );
+
+            if (!selecionado) {
+              setErroFormulario(
+                "O aluno solicitado não foi encontrado entre seus alunos."
+              );
+              return;
+            }
+
+            const notasDoAluno = criarNotasVazias();
+
+            for (const campo of CAMPOS_NOTAS) {
+              const valor = selecionado.notas?.[campo];
+
+              notasDoAluno[campo] =
+                valor === null || valor === undefined ? "" : String(valor);
+            }
+
+            setAluno(selecionado.id);
+            setNotas(notasDoAluno);
+          }
+        }
+        
+      } catch (erro) {
+        if (!ativo) return;
+
+        console.error("Erro ao buscar alunos:", erro);
+
+        setErroCarregamento(
+          erro.code === "permission-denied"
+            ? "Sem permissão para consultar alunos. Confira as regras do Firestore."
+            : "Não foi possível carregar os alunos. Confira a conexão e atualize a página."
+        );
+      } finally {
+        if (ativo) {
+          setCarregando(false);
+        }
+      }
     }
 
-    function handleCancel() {
-        setAluno("");
-        setNota1("");
-        setNota2("");
-        setNota3("");
-        setNota4("");
+    carregarAlunos();
 
-        setNota1Error("");
-        setNota2Error("");
-        setNota3Error("");
-        setNota4Error("");
+    return () => {
+      ativo = false;
+    };
+  }, [professorId, alunoInicial]);
+
+  function selecionarAluno(event) {
+    const id = event.target.value;
+    const selecionado = alunos.find((item) => item.id === id);
+
+    setAluno(id);
+    setErrosNotas({});
+    setErroFormulario("");
+    setSucesso("");
+
+    const notasDoAluno = criarNotasVazias();
+
+    for (const campo of CAMPOS_NOTAS) {
+      const valor = selecionado?.notas?.[campo];
+
+      notasDoAluno[campo] =
+        valor === null || valor === undefined ? "" : String(valor);
     }
 
-    return (
-        <>
-            <SideNav 
-                title={"Professor"}
-                items={professorMenu}
-            />
+    setNotas(notasDoAluno);
+  }
 
-            <main className="Aluno_Notas">
+  function alterarNota(campo, valor) {
+    setNotas((anteriores) => ({
+      ...anteriores,
+      [campo]: valor,
+    }));
 
-                <div className="Aluno_GradeForm">
+    setErrosNotas((anteriores) => ({
+      ...anteriores,
+      [campo]: "",
+    }));
 
-                    <div className="GradeForm_Header">
-                        <h1>Notas do aluno</h1>
-                        <p>Selecione o aluno e informe as notas dos bimestres.</p>
-                    </div>
+    setErroFormulario("");
+    setSucesso("");
+  }
 
-                    <form
-                        className="GradeForm"
-                        onSubmit={handleSubmit}
-                    >
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-                        {/* Seleção do aluno */}
-                        <div className="GradeForm_Select">
+    if (salvando || carregando) return;
 
-                            <label htmlFor="aluno">
-                                Nome do aluno
-                            </label>
+    setErroFormulario("");
+    setSucesso("");
+    setErrosNotas({});
 
-                            <select
-                                id="aluno"
-                                value={aluno}
-                                onChange={(event) => setAluno(event.target.value)}
-                            >
-                                <option value="">
-                                    Selecione um aluno
-                                </option>
+    if (!aluno) {
+      setErroFormulario("Selecione um aluno.");
+      return;
+    }
 
-                                {/* Futuramente será preenchido pelos alunos cadastrados */}
-                                <option value="joao">
-                                    João Silva
-                                </option>
+    const novosErros = {};
+    const notasConvertidas = {};
 
-                                <option value="maria">
-                                    Maria Souza
-                                </option>
-                            </select>
+    for (const campo of CAMPOS_NOTAS) {
+      const texto = notas[campo].trim();
 
-                        </div>
+      // Um campo vazio significa nota ainda não lançada.
+      if (texto === "") {
+        notasConvertidas[campo] = null;
+        continue;
+      }
 
-                        {/* Notas */}
-                        <div className="GradeForm_Grades">
+      const numero = Number(texto);
 
-                            <FormField
-                                label="1° Bimestre"
-                                id="nota1"
-                                type="number"
-                                placeholder="0.0 - 10.0"
-                                value={nota1}
-                                onChange={(event) => setNota1(event.target.value)}
-                                error={nota1Error}
-                            />
+      if (!Number.isFinite(numero) || numero < 0 || numero > 10) {
+        novosErros[campo] = "Informe uma nota entre 0 e 10.";
+      } else {
+        notasConvertidas[campo] = numero;
+      }
+    }
 
-                            <FormField
-                                label="2° Bimestre"
-                                id="nota2"
-                                type="number"
-                                placeholder="0.0 - 10.0"
-                                value={nota2}
-                                onChange={(event) => setNota2(event.target.value)}
-                                error={nota2Error}
-                            />
+    if (Object.keys(novosErros).length > 0) {
+      setErrosNotas(novosErros);
+      return;
+    }
 
-                            <FormField
-                                label="3° Bimestre"
-                                id="nota3"
-                                type="number"
-                                placeholder="0.0 - 10.0"
-                                value={nota3}
-                                onChange={(event) => setNota3(event.target.value)}
-                                error={nota3Error}
-                            />
+    setSalvando(true);
 
-                            <FormField
-                                label="4° Bimestre"
-                                id="nota4"
-                                type="number"
-                                placeholder="0.0 - 10.0"
-                                value={nota4}
-                                onChange={(event) => setNota4(event.target.value)}
-                                error={nota4Error}
-                            />
+    try {
+      await salvarNotas(aluno, notasConvertidas);
 
-                        </div>
+      // Atualiza a lista local para manter as notas ao trocar a seleção.
+      setAlunos((anteriores) =>
+        anteriores.map((item) =>
+          item.id === aluno
+            ? { ...item, notas: notasConvertidas }
+            : item
+        )
+      );
 
-                        {/* Botões */}
-                        <div className="Form_Buttons">
+      setSucesso("Notas salvas com sucesso!");
+    } catch (erro) {
+      console.error("Erro ao salvar notas:", erro);
 
-                            <button
-                                type="button"
-                                className="Form_Button Form_Button-Cancel"
-                                onClick={handleCancel}
-                            >
-                                Cancelar
-                            </button>
+      if (erro.code === "permission-denied") {
+        setErroFormulario(
+          "Sem permissão para salvar. Confira as regras e o professor responsável pelo aluno."
+        );
+      } else if (erro.code === "not-found") {
+        setErroFormulario(
+          "O cadastro deste aluno não foi encontrado. Atualize a página."
+        );
+      } else {
+        setErroFormulario(
+          "Não foi possível salvar as notas. Confira sua conexão e tente novamente."
+        );
+      }
+    } finally {
+      setSalvando(false);
+    }
+  }
 
-                            <button
-                                type="submit"
-                                className="Form_Button Form_Button-Save"
-                            >
-                                Salvar notas
-                            </button>
+  function handleCancel() {
+    setAluno("");
+    setNotas(criarNotasVazias());
+    setErrosNotas({});
+    setErroFormulario("");
+    setSucesso("");
+  }
 
-                        </div>
+  return (
+    <>
+      <SideNav title="Professor" items={professorMenu} />
 
-                    </form>
+      <main className="Aluno_Notas">
+        <div className="Aluno_GradeForm">
+          <div className="GradeForm_Header">
+            <h1>Notas do aluno</h1>
+            <p>
+              Selecione o aluno e informe as notas dos bimestres.
+              Deixe em branco as notas ainda não lançadas.
+            </p>
+          </div>
 
-                </div>
+          <form className="GradeForm" onSubmit={handleSubmit}>
+            <div className="GradeForm_Select">
+              <label htmlFor="aluno">Nome do aluno</label>
 
-            </main>
-        </>
-    );
+              <select
+                id="aluno"
+                value={aluno}
+                onChange={selecionarAluno}
+                disabled={
+                  carregando ||
+                  salvando ||
+                  Boolean(erroCarregamento) ||
+                  alunos.length === 0
+                }
+              >
+                <option value="">
+                  {carregando
+                    ? "Carregando alunos..."
+                    : "Selecione um aluno"}
+                </option>
+
+                {alunos.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {erroCarregamento && (
+              <p className="GradeForm_Message GradeForm_Message-error" role="alert">
+                {erroCarregamento}
+              </p>
+            )}
+
+            {!carregando && !erroCarregamento && alunos.length === 0 && (
+              <p className="GradeForm_Message" role="status">
+                Nenhum aluno vinculado a este professor.
+              </p>
+            )}
+
+            <div className="GradeForm_Grades">
+              {CAMPOS_NOTAS.map((campo, indice) => (
+                <FormField
+                  key={campo}
+                  label={`${indice + 1}º Bimestre`}
+                  id={`nota${indice + 1}`}
+                  type="number"
+                  placeholder="0.0 - 10.0"
+                  min={0}
+                  max={10}
+                  step="any"
+                  value={notas[campo]}
+                  onChange={(event) =>
+                    alterarNota(campo, event.target.value)
+                  }
+                  error={errosNotas[campo]}
+                  disabled={!aluno || salvando}
+                />
+              ))}
+            </div>
+
+            {erroFormulario && (
+              <p className="GradeForm_Message GradeForm_Message-error" role="alert">
+                {erroFormulario}
+              </p>
+            )}
+
+            {sucesso && (
+              <p className="GradeForm_Message GradeForm_Message-success" role="status">
+                {sucesso}
+              </p>
+            )}
+
+            <div className="Form_Buttons">
+              <button
+                type="button"
+                className="Form_Button Form_Button-Cancel"
+                onClick={handleCancel}
+                disabled={salvando}
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="submit"
+                className="Form_Button Form_Button-Save"
+                disabled={
+                  !aluno ||
+                  carregando ||
+                  salvando ||
+                  Boolean(erroCarregamento)
+                }
+              >
+                {salvando ? "Salvando..." : "Salvar notas"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </>
+  );
 }
