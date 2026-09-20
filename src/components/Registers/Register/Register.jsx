@@ -1,143 +1,196 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import "./Register.css"
+import { AuthContext } from "../../../contexts/AuthContext";
+import { observarAlunosDoProfessor } from "../../../services/alunoService";
+import { calcularResultado } from "../../../utils/notas";
 
-export default function AlunosList() {
+import "./Register.css";
 
-    const notas = [
-        {
-            id: 1,
-            nome: "João Silva",
-            nota: 8.5,
-            situacao: "Aprovado",
-            atualizado: "10/09/2026"
-        },
-        {
-            id: 2,
-            nome: "Maria Santos",
-            nota: 6.0,
-            situacao: "Aprovado",
-            atualizado: "09/09/2026"
-        },
-        {
-            id: 3,
-            nome: "Pedro Oliveira",
-            nota: 4.5,
-            situacao: "Reprovado",
-            atualizado: "08/09/2026"
-        },
-        {
-            id: 4,
-            nome: "Ana Lima",
-            nota: 9.2,
-            situacao: "Aprovado",
-            atualizado: "07/09/2026"
-        },
-        {
-            id: 5,
-            nome: "Carlos Mendes",
-            nota: 3.8,
-            situacao: "Reprovado",
-            atualizado: "06/09/2026"
-        }
-    ];
+const FILTROS = [
+  { texto: "Todos", valor: "todos" },
+  { texto: "Aprovados", valor: "Aprovado" },
+  { texto: "Reprovados", valor: "Reprovado" },
+  { texto: "Em andamento", valor: "Em andamento" },
+];
 
-    return (
-        <div className="Dashboard_Registers">
+const CLASSES_STATUS = {
+  Aprovado: "approved",
+  Reprovado: "failed",
+  "Em andamento": "pending",
+};
 
-            {/* nessa parte dos filtros vc vai ter que filtrar eles pra mim manito */}
+function normalizarTexto(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
 
-            <div className="Registers_Filters">
+export default function Register() {
+  const { perfil } = useContext(AuthContext);
 
-                <input
-                    type="text"
-                    className="Registers_Search"
-                    placeholder="Buscar aluno..."
-                />
+  const [alunos, setAlunos] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [filtro, setFiltro] = useState("todos");
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
 
-                <div className="Registers_Tabs">
+  const professorId = perfil.uid;
 
-                    <button className="Registers_Tab active">
-                        Todos
-                    </button>
+  useEffect(() => {
+    const cancelarObservacao = observarAlunosDoProfessor(
+      professorId,
+      (lista) => {
+        setAlunos(lista);
+        setErro("");
+        setCarregando(false);
+      },
+      (falha) => {
+        console.error("Erro ao carregar a listagem:", falha);
 
-                    <button className="Registers_Tab">
-                        Aprovados
-                    </button>
-
-                    <button className="Registers_Tab">
-                        Reprovados
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div className="Registers_Fields">
-
-                <span>Nome</span>
-
-                <span>Nota final</span>
-
-                <span>Situação</span>
-
-                <span>Atualizado</span>
-
-                <span>Ações</span>
-
-            </div>
-
-
-            <div className="Registers_Rows">
-
-                {notas.map((nota) => (
-
-                    <div
-                        className="Registers_Field"
-                        key={nota.id}
-                    >
-
-                        <span className="Register_Name">
-                            {nota.nome}
-                        </span>
-
-                        <span className="Register_Grade">
-                            {nota.nota.toFixed(1)}
-                        </span>
-
-                        <span>
-
-                            <span
-                                className={
-                                    nota.situacao === "Aprovado"
-                                        ? "Register_Status approved"
-                                        : "Register_Status failed"
-                                }
-                            >
-                                {nota.situacao}
-                            </span>
-
-                        </span>
-
-                        <span className="Register_Date">
-                            {nota.atualizado}
-                        </span>
-
-                        <span className="Register_Action">
-
-                            <Link to="#">
-                                Editar
-                            </Link>
-
-                        </span>
-
-                    </div>
-
-                ))}
-
-            </div>
-
-        </div>
+        setAlunos([]);
+        setErro(
+          "Não foi possível carregar os alunos. Confira sua conexão e as permissões de acesso."
+        );
+        setCarregando(false);
+      }
     );
+
+    return cancelarObservacao;
+  }, [professorId]);
+
+  const alunosFiltrados = alunos
+    .map((aluno) => ({
+      ...aluno,
+      ...calcularResultado(aluno.notas),
+    }))
+    .filter((aluno) => {
+      const correspondeNome = normalizarTexto(aluno.nome).includes(
+        normalizarTexto(busca)
+      );
+
+      const correspondeSituacao =
+        filtro === "todos" || aluno.status === filtro;
+
+      return correspondeNome && correspondeSituacao;
+    });
+
+  return (
+    <div className="Dashboard_Registers">
+      <div className="Registers_Filters">
+        <input
+          type="search"
+          className="Registers_Search"
+          placeholder="Buscar aluno..."
+          aria-label="Buscar aluno por nome"
+          value={busca}
+          onChange={(event) => setBusca(event.target.value)}
+        />
+
+        <div className="Registers_Tabs">
+          {FILTROS.map((item) => (
+            <button
+              key={item.valor}
+              type="button"
+              className={`Registers_Tab ${
+                filtro === item.valor ? "active" : ""
+              }`}
+              aria-pressed={filtro === item.valor}
+              onClick={() => setFiltro(item.valor)}
+            >
+              {item.texto}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="Registers_Fields">
+        <span>Nome</span>
+        <span>Nota final</span>
+        <span>Situação</span>
+        <span>Atualizado</span>
+        <span>Ações</span>
+      </div>
+
+      <div className="Registers_Rows">
+        {carregando && (
+          <p className="Registers_Message" role="status">
+            Carregando alunos...
+          </p>
+        )}
+
+        {!carregando && erro && (
+          <div className="Registers_Message" role="alert">
+            <p>{erro}</p>
+
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+            >
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
+        {!carregando && !erro && alunosFiltrados.length === 0 && (
+          <p className="Registers_Message" role="status">
+            {alunos.length === 0
+              ? "Nenhum aluno vinculado a este professor."
+              : "Nenhum aluno corresponde à busca e ao filtro selecionados."}
+          </p>
+        )}
+
+        {!carregando &&
+          !erro &&
+          alunosFiltrados.map((aluno) => {
+            const mediaFormatada =
+              aluno.media === null
+                ? "—"
+                : aluno.media.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 2,
+                  });
+
+            const data = aluno.atualizadoEm?.toDate?.();
+
+            return (
+              <div className="Registers_Field" key={aluno.id}>
+                <span className="Register_Name">
+                  {aluno.nome}
+                </span>
+
+                <span className="Register_Grade">
+                  {mediaFormatada}
+                </span>
+
+                <span>
+                  <span
+                    className={`Register_Status ${
+                      CLASSES_STATUS[aluno.status]
+                    }`}
+                  >
+                    {aluno.status}
+                  </span>
+                </span>
+
+                <span className="Register_Date">
+                  {data ? data.toLocaleDateString("pt-BR") : "—"}
+                </span>
+
+                <span className="Register_Action">
+                  <Link
+                    to="/professor/alunos/notas"
+                    state={{ alunoId: aluno.id }}
+                  >
+                    Editar
+                  </Link>
+                </span>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
 }

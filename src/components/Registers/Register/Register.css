@@ -334,3 +334,19 @@
         text-align: right;
     }
 }
+
+.Register_Status.pending {
+  color: #fbbf24;
+  background-color: rgba(251, 191, 36, 0.1);
+}
+
+.Registers_Tabs {
+  flex-wrap: wrap;
+}
+
+.Registers_Message {
+  padding: 16px;
+  color: var(--text-primary, #fff);
+  font-size: 14px;
+  line-height: 1.5;
+}

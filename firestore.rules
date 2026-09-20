@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function temPerfil(tipo) {
+      return request.auth != null
+        && get(
+          /databases/$(database)/documents/usuarios/$(request.auth.uid)
+        ).data.tipo == tipo;
+    }
+
+    function notaValida(nota) {
+      return nota == null
+        || (nota is number && nota >= 0 && nota <= 10);
+    }
+
+    function notasValidas(notas) {
+      return notas is map
+        && notas.keys().hasAll([
+          'bimestre1', 'bimestre2', 'bimestre3', 'bimestre4'
+        ])
+        && notas.keys().hasOnly([
+          'bimestre1', 'bimestre2', 'bimestre3', 'bimestre4'
+        ])
+        && notaValida(notas.bimestre1)
+        && notaValida(notas.bimestre2)
+        && notaValida(notas.bimestre3)
+        && notaValida(notas.bimestre4);
+    }
+
+    match /usuarios/{uid} {
+      allow get: if request.auth != null
+        && request.auth.uid == uid;
+
+      allow list, create, update, delete: if false;
+    }
+
+    match /alunos/{alunoId} {
+
+      function professorResponsavel() {
+        return temPerfil('professor')
+          && resource.data.professorId == request.auth.uid;
+      }
+
+      function proprioAluno() {
+        return temPerfil('aluno')
+          && resource.data.usuarioId == request.auth.uid;
+      }
+
+      allow read: if professorResponsavel() || proprioAluno();
+
+      allow update: if professorResponsavel()
+        && request.resource.data.diff(resource.data)
+          .affectedKeys().hasOnly(['notas', 'atualizadoEm'])
+        && notasValidas(request.resource.data.notas)
+        && request.resource.data.atualizadoEm == request.time;
+
+      allow create, delete: if false;
+    }
+  }
+}

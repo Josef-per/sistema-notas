@@ -350,3 +350,32 @@
     }
 
 }
+
+.GradeForm_Message {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border-card, #39334a);
+  border-radius: 10px;
+  color: var(--text-primary, #fff);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.GradeForm_Message-error {
+  color: #f87171;
+  background-color: rgba(248, 113, 113, 0.08);
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.GradeForm_Message-success {
+  color: #22c55e;
+  background-color: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.GradeForm button:disabled,
+.GradeForm select:disabled,
+.GradeForm input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
